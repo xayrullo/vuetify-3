@@ -1,30 +1,40 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <v-app>
+    <v-main>
+      <ContentBlock/>
+    </v-main>
+
+    <v-footer app v-bind="localAttrs">
+      <XFooter />
+    </v-footer>
+  </v-app>
 </template>
+<script lang="ts">
+import { defineComponent, computed } from 'vue'
+import ContentBlock from '@/components/ContentBlock.vue';
+import XFooter from '@/components/XFooter.vue';
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+export default defineComponent({
+  name: 'App',
+  components: {
+    ContentBlock,
+    XFooter,
+  },
+  setup() {
+    const localAttrs = computed(() => {
+      const attrs = {
+        absolute: false,
+        fixed: false
+      }
 
-nav {
-  padding: 30px;
-}
+      attrs.absolute = true
+      attrs.fixed = false
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+      return attrs
+    });
+    return {
+      localAttrs
+    }
+  },
+})
+</script>
